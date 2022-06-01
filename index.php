@@ -40,75 +40,18 @@ if($content){
 
 
 
-    $databaseHost     = 'localhost';
-    $databaseName     = 'tpendaftaran';
-    $databaseUsername = 'root';
-    $databasePassword = '';
-
-    $mysqli         = mysqli_connect($databaseHost, $databaseUsername, $databasePassword, $databaseName); 
-    
-    $getpendaftaran = mysqli_query($mysqli,"SELECT * FROM usertele WHERE chat='$chat_id'");
-    $getdata        = mysqli_fetch_array($getpendaftaran);
-
-    $penduduk = mysqli_query($mysqli,"SELECT * FROM penduduk WHERE nik = '$katake2'");
-    $getwarga       = mysqli_fetch_array($penduduk);
-
-    if (($getdata['id'] =='') and ($text=='/daftar'))
+    if ($text=='/daftar')
        {
-		    mysqli_query($mysqli,"insert into usertele values ('','$uid','$uid_stat','','$chat_id')");
+		    //mysqli_query($mysqli,"insert into usertele values ('','$uid','$uid_stat','','$chat_id')");
             $reply.="Assalaumalaikum Wr.wb !!. Selamat datang. ";
             $reply.=$uid;
             $reply.=", Anda sekarang sudah menjadi anggota ";
             $key =['remove_keyboard'=>true,];
             sendTyping($apiLink, $chat_id);
             sendMessage($key,$apiLink, $chat_id, $reply);
-	   }
-     else if (($text=='/hapus') and ($getdata['chat'] ==$chat_id))  
-        {      
-            //DELETE FROM tb_category WHERE category_id =
-            mysqli_query($mysqli,"DELETE FROM usertele WHERE chat = '$chat_id'");
-            //DELETE FROM `usertele` WHERE `usertele`.`id` = 1
-            $reply.=", Anda sekarang bukan anggota lagi ";
-            $key =['remove_keyboard'=>true,];
-            sendTyping($apiLink, $chat_id);
-            sendMessage($key,$apiLink, $chat_id, $reply); 
+	       
         }
-        else if (($text=='/cek') and ($getdata['chat'] ==$chat_id))  
-        {      
-            //DELETE FROM tb_category WHERE category_id =
-            mysqli_query($mysqli,"SELECT * FROM usertele WHERE chat = '$chat_id'");
-            $reply.=", Anda ditemukan dengan username : ";
-            $reply.=$getdata['username'];
-            $key =['remove_keyboard'=>true,];
-            sendTyping($apiLink, $chat_id);
-            sendMessage($key,$apiLink, $chat_id, $reply); 
-        }
-          else if (($katake1=='nik') and ($getdata['chat'] ==$chat_id) and ($getwarga['nik'] ==$katake2)) 
-        {      
-                      
-            $reply.="hasil pencarian : ".$text." a.n ";
-            $reply.=$getwarga['nama'];
-            $key =['remove_keyboard'=>true,];
-            sendTyping($apiLink, $chat_id);
-            sendMessage($key,$apiLink, $chat_id, $reply); 
-
-        }
-              else if (($katake1=='tambah') and ($getdata['chat'] ==$chat_id)) 
-        {      
-            //cek nik 
-            $penduduk = mysqli_query($mysqli,"SELECT * FROM penduduk WHERE nik = '$katake2'");
-            $getwarga       = mysqli_fetch_array($penduduk);
-
-            mysqli_query($mysqli,"insert into penduduk values ('','$katake2','$katake3','$katake4','$katake5','$katake6','$katake7','','','')");
-            
-            $reply.="data berhasil ditambahkan: ".$getwarga['nik']." a.n ";
-            $reply.=$getwarga['nama'];
-            $key =['remove_keyboard'=>true,];
-            sendTyping($apiLink, $chat_id);
-            sendMessage($key,$apiLink, $chat_id, $reply); 
-         
-        }
-          else if (($katake1=='infogempa') and ($getdata['chat'] ==$chat_id) OR ($katake1=='infogempa'.$usernamebot) ) 
+         else if ($katake1=='infogempa') 
         {     
             global $usernamebot;
                         
