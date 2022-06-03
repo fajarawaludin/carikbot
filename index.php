@@ -16,6 +16,14 @@ if($content){
     $sender    = $val['message']['from'];
     $uid       = $val['message']['from']['username'];
     $uid_stat  = $val['message']['chat']['type'];
+	
+   $data= file_get_contents("http://localhost/apiweb/lihat.php");
+   $data= json_decode($data);
+
+   $cari = array_search('$katake2', array_column($data, 'nama'));
+   $nama= $data[$cari]->nama;
+   $nama= $data[$cari]->nik;
+   $nama= $data[$cari]->nkk;
 
     $pecah2 = explode(' ', $text, 10);
             $katake1 = strtolower($pecah2[0]); //untuk command
@@ -67,6 +75,13 @@ if($content){
             sendMessage($key,$apiLink, $chat_id, $reply); 
          
         }
+	 else if ($katake1=='penduduk') 
+        {   
+             $reply.=$nama;
+             $key =['remove_keyboard'=>true,];
+            sendTyping($apiLink, $chat_id);
+            sendMessage($key,$apiLink, $chat_id, $reply); 
+	 }
       else {
             
             
